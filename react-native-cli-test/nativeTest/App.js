@@ -15,6 +15,7 @@ import {
   Text,
   Image,
   StatusBar,
+  Button
 } from 'react-native';
 
 import {
@@ -42,14 +43,44 @@ class Flower extends Component {
   }
 }
 
-const App: () => React$Node = () => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.hello}>Hello World!</Text>
-      <Flower type='one' />
-      <Flower type='two' />
-    </View>
-  );
+class App extends Component {
+  
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      address: ''
+    }
+  }
+
+  writeAddress = () => {
+    this.setState({
+        address: '서울시 성북구'
+    }, function () {
+      alert('alert');
+    })
+
+  }
+
+  resetAddress = () => {
+    this.setState({
+        address: ''
+    })
+  }
+  
+  render () {
+      return (
+          <View style={styles.container}>
+              <Text style={styles.hello}>Hello World!</Text>
+              <Flower type='one' />
+              <Flower type='two' />
+
+              <Text>{ this.state.address }</Text>
+              <Button title={'나의 주소 출력'} onPress={this.writeAddress} />
+              <Button title={'리셋'} onPress={this.resetAddress} />
+          </View>
+      );
+  }
 };
 
 const styles = StyleSheet.create({
