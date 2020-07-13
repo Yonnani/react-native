@@ -27,19 +27,26 @@ import {
 class App extends Component {
   render() {
       return (
-          <View style={styles.container}>
+          <SafeAreaView style={styles.container}>
             {/*<View style={{width: 100, height: 100, backgroundColor: 'red'}} />*/}
-            <View style={{flex: 1, backgroundColor: 'red'}} />
-            <View style={{flex: 2, backgroundColor: 'green'}} />
-            <View style={{flex: 3, backgroundColor: 'blue'}} />
-          </View>
+            {/*<View style={{flex: 1, backgroundColor: 'red'}} />*/}
+            {/*<View style={{flex: 2, backgroundColor: 'orange'}} />*/}
+            {/*<View style={{flex: 3, backgroundColor: 'yellow'}} />*/}
+
+              <View style={{width: 50, height: 50, backgroundColor: 'red'}} />
+              <View style={{width: 50, height: 50, backgroundColor: 'orange'}} />
+              <View style={{width: 50, height: 50, backgroundColor: 'yellow'}} />
+          </SafeAreaView>
       );
   }
 };
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1
+      flex: 1,
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center'
     }
 });
 
