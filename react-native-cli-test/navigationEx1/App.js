@@ -26,15 +26,32 @@ function HomeScreen({navigation}) {
   return (
       <View>
         <Text>Home Screen 입니다.</Text>
-        <Button title="프로필 페이지로 이동" onPress={() => navigation.navigate('Profile')} />
+        <Button title="프로필 페이지로 이동"
+                onPress={
+                    () => navigation.navigate('Profile', {
+                        itemId: 86,
+                        otherParam: 'anything you want here'
+                    })
+                } />
       </View>
   );
 }
 
-function ProfileScreen({navigation}) {
+function ProfileScreen({route, navigation}) {
+
+    const { itemId } = route.params;
+    const { otherParam } = route.params;
+
     return (
         <View>
             <Text>Profile Screen 입니다.</Text>
+
+            <Text>itemId: {itemId}</Text>
+            <Text>otherParam: {otherParam}</Text>
+
+            <Button title="프로필 페이지로 이동" onPress={() => navigation.push('Profile')} />
+            <Button title="Go back" onPress={() => navigation.goBack()} />
+            <Button title="Pop To Top" onPress={() => navigation.popToTop()} />
         </View>
     );
 }
@@ -47,9 +64,11 @@ class App extends Component {
                   <Stack.Screen
                       name="Home"
                       component={HomeScreen}
-                      options={{ title: 'Welcome' }}
-                  />
-                  <Stack.Screen name="Profile" component={ProfileScreen} />
+                      options={{ title: 'Welcome' }} />
+                  <Stack.Screen
+                      name="Profile"
+                      component={ProfileScreen}
+                      initialParams={{ itemId: 42, otherParam: 'test' }} />
               </Stack.Navigator>
           </NavigationContainer>
       );
