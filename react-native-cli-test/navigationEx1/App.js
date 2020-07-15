@@ -17,42 +17,51 @@ import {
   View,
   Text,
   StatusBar,
-  Button
+  Button,
+  TextInput
 } from 'react-native';
 
 const Stack = createStackNavigator();
 
-function HomeScreen({navigation}) {
-  return (
-      <View>
-        <Text>Home Screen 입니다.</Text>
-        <Button title="프로필 페이지로 이동"
-                onPress={
-                    () => navigation.navigate('Profile', {
-                        itemId: 86,
-                        otherParam: 'anything you want here'
-                    })
-                } />
-      </View>
-  );
-}
-
-function ProfileScreen({route, navigation}) {
-
-    const { itemId } = route.params;
-    const { otherParam } = route.params;
+function HomeScreen({ navigation, route }) {
+    React.useEffect(() => {
+        if (route.params?.post) {
+            // Post updated, do something with `route.params.post`
+            // For example, send the post to the server
+        }
+    }, [route.params?.post]);
 
     return (
-        <View>
-            <Text>Profile Screen 입니다.</Text>
-
-            <Text>itemId: {itemId}</Text>
-            <Text>otherParam: {otherParam}</Text>
-
-            <Button title="프로필 페이지로 이동" onPress={() => navigation.push('Profile')} />
-            <Button title="Go back" onPress={() => navigation.goBack()} />
-            <Button title="Pop To Top" onPress={() => navigation.popToTop()} />
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <Button
+                title="Create post"
+                onPress={() => navigation.navigate('CreatePost')}
+            />
+            <Text style={{ margin: 10 }}>Post: {route.params?.post}</Text>
         </View>
+    );
+}
+
+function CreatePostScreen({ navigation, route }) {
+    const [postText, setPostText] = React.useState('');
+
+    return (
+        <>
+            <TextInput
+                multiline
+                placeholder="What's on your mind?"
+                style={{ height: 200, padding: 10, backgroundColor: 'white' }}
+                value={postText}
+                onChangeText={setPostText}
+            />
+            <Button
+                title="Done"
+                onPress={() => {
+                    // Pass params back to home screen
+                    navigation.navigate('Home', { post: postText });
+                }}
+            />
+        </>
     );
 }
 
@@ -60,15 +69,9 @@ class App extends Component {
   render() {
       return (
           <NavigationContainer>
-              <Stack.Navigator>
-                  <Stack.Screen
-                      name="Home"
-                      component={HomeScreen}
-                      options={{ title: 'Welcome' }} />
-                  <Stack.Screen
-                      name="Profile"
-                      component={ProfileScreen}
-                      initialParams={{ itemId: 42, otherParam: 'test' }} />
+              <Stack.Navigator mode="modal">
+                  <Stack.Screen name="Home" component={HomeScreen} />
+                  <Stack.Screen name="CreatePost" component={CreatePostScreen} />
               </Stack.Navigator>
           </NavigationContainer>
       );
