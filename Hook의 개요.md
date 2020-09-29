@@ -37,7 +37,31 @@ function Example() {
 
 ### Effect Hook
 
+- useEffect
+  - React class의 `componentDidMount`, `componentDidUpdate`, `componentWillUnmount` 와 같은 목적으로 제공되지만 하나의 API로 통합된 것임
 
+```react
+import React, { useState, useEffect } from 'react';
+
+function Example() {
+  const [count, setCount] = useState(0);
+  
+  // componentDidMount, componentDidUpdate와 비슷
+  useEffect(() => {
+    // 브라우저 API를 이용해 문서의 타이틀을 업데이트함
+    document.title = `You clicked ${count} times`;
+  });
+  
+  return (
+    <div>
+      <P>You clicked {count} times</P>
+      <button onClick={() => setCount(count + 1)}>
+        Click me
+      </button>
+    </div>
+  );
+}
+```
 
 
 
