@@ -63,5 +63,8 @@ function Example() {
 }
 ```
 
+### Hook 사용 규칙
 
+- 최상위(at the top level)에서만 훅 호출해야 함
+- React 함수 컴포넌트 내에서만 훅을 호출해야 함
 
